@@ -3,6 +3,7 @@ START_CMD_USER = "Hola! Te puedo ayudar a tomar responsablemente con tu grupo de
 START_CMD_GROUP = "Hola! Los voy a ayudar a tomar responsablemente :D"
 START_CMD_CHANNEL = "Hola! De verdad no sé como me añadiste a un canal, " \
                     "pero necesito estar en un grupo para funcionar"
+START_REPEATED = "Ya me han empezado en este grupo c:"
 HELP_CMD = "Saludos cordiales"
 
 ESTADO_INFLUENCIA = "Bajo la influencia del Alcohol:" \
