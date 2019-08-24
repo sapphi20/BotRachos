@@ -53,12 +53,12 @@
     {
       "key": "10",
       "type": "image",
-      "content": "resources/fallecidos_por_alcohol_chile.png"
+      "content": "/resources/fallecidos_por_alcohol_chile.png"
     },
     {
       "key": "11",
       "type": "image",
-      "content": "resources/fiscalizaciones_carabineros.png"
+      "content": "/resources/fiscalizaciones_carabineros.png"
     }
   ]
 }

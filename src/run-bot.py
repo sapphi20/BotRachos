@@ -1,12 +1,12 @@
 import logging
-import os
 
 from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
-from config import BOT_TOKEN
-from src.messages import ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, SANCIONES_MSG, SANCIONES_URI, START_CMD_CHANNEL, \
-    START_CMD_GROUP, START_CMD_USER, START_REPEATED
+from config import BASE_PATH, BOT_TOKEN
+from src.messages import CURIOUS_FACT_MSG, ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, SANCIONES_MSG, SANCIONES_URI, \
+    START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER, START_REPEATED
+from src.utils import funfact_uri, random_funfact
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -72,10 +72,25 @@ def sanctions(update: Update, context: CallbackContext):
     """ Manages the 'sanciones' command """
     chat = update.effective_chat
     message = SANCIONES_MSG
-    uri = os.getcwd() + '/..' + SANCIONES_URI
-    print(os.getcwd() + '/..' + uri)
+    uri = BASE_PATH + SANCIONES_URI
     photo = open(uri, 'rb')
     context.bot.send_photo(chat_id=chat['id'], photo=photo, caption=message)
+
+
+def curious_fact(update: Update, context: CallbackContext):
+    """ Manages the 'datoCurioso' command """
+    chat = update.effective_chat
+    message = CURIOUS_FACT_MSG
+    uri = BASE_PATH + funfact_uri
+    context.bot.send_message(chat_id=chat['id'], text=message)
+    fact = random_funfact(uri)
+    print(fact)
+    print(fact[0])
+    print(fact[1])
+    if fact[1] == 'text':
+        context.bot.send_message(chat_id=chat['id'], text=fact[0])
+    elif fact[1] == 'image':
+        context.bot.send_photo(chat_id=chat['id'], photo=(BASE_PATH + fact(0)))
 
 
 def error(update: Update, context: CallbackContext):
@@ -115,6 +130,11 @@ def main():
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
     sanctions_handler = CommandHandler('sanciones', sanctions)
     dp.add_handler(sanctions_handler)
+
+    # Handler for the /datoCurioso command
+    # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
+    curious_fact_handler = CommandHandler('datoCurioso', curious_fact)
+    dp.add_handler(curious_fact_handler)
 
     # Handler for the /help command
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html

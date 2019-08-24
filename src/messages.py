@@ -32,3 +32,5 @@ ESTADO_EBRIEDAD = "Estado de ebriedad:\n" \
 
 SANCIONES_MSG = "Éstas son las sanciones por manejar con alcohol, por favor sean responsables"
 SANCIONES_URI = "/resources/SancionesLeyToleranciaCero.jpg"
+
+CURIOUS_FACT_MSG = "Dato curioso del minuto:"
