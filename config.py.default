@@ -1,2 +1,2 @@
 # Agregar variables de configuración
-BOT_TOKEN=""
+BOT_TOKEN = ""
