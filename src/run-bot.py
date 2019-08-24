@@ -23,7 +23,7 @@ def start(update: Update, context: CallbackContext):
     """ Manages the start command """
     # https://python-telegram-bot.readthedocs.io/en/stable/telegram.user.html
     chat = update.effective_chat
-    result = CONV_STATES['EXIT']
+    result = CONV_STATES['GROUP']
     message = START_CMD_GROUP
     chat_type = chat.type
     if chat_type == chat.CHANNEL:
@@ -31,6 +31,7 @@ def start(update: Update, context: CallbackContext):
         result = CONV_STATES['EXIT']
     elif chat_type == chat.PRIVATE:
         message = START_CMD_USER
+        result = CONV_STATES['EXIT']
     context.bot.send_message(chat_id=chat['id'], text=message)
     return result
 
