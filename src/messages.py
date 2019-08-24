@@ -30,4 +30,5 @@ ESTADO_EBRIEDAD = "Estado de ebriedad:\n" \
                   "** Equivalencia calculada para una mujer de 55Kg y un hombre de 70Kg.\n" \
                   "*** 1 vaso equivale a 200 ml"
 
-SANCIONES = "resources/SancionesLeyToleranciaCero.jpg"
+SANCIONES_MSG = "Éstas son las sanciones por manejar con alcohol, por favor sean responsables"
+SANCIONES_URI = "/resources/SancionesLeyToleranciaCero.jpg"

@@ -1,11 +1,12 @@
 import logging
+import os
 
 from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BOT_TOKEN
-from src.messages import ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, START_CMD_CHANNEL, START_CMD_GROUP, \
-    START_CMD_USER, START_REPEATED
+from src.messages import ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, SANCIONES_MSG, SANCIONES_URI, START_CMD_CHANNEL, \
+    START_CMD_GROUP, START_CMD_USER, START_REPEATED
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -67,6 +68,16 @@ def drunkenness(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=chat['id'], text=message)
 
 
+def sanctions(update: Update, context: CallbackContext):
+    """ Manages the 'sanciones' command """
+    chat = update.effective_chat
+    message = SANCIONES_MSG
+    uri = os.getcwd() + '/..' + SANCIONES_URI
+    print(os.getcwd() + '/..' + uri)
+    photo = open(uri, 'rb')
+    context.bot.send_photo(chat_id=chat['id'], photo=photo, caption=message)
+
+
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -85,7 +96,7 @@ def main():
     # https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html
     start_handler = ConversationHandler(
         [CommandHandler('start', start)],
-        {1: [CommandHandler('start', start_repeated)]},
+        {CONV_STATES['GROUP']: [CommandHandler('start', start_repeated)]},
         [],
     )
     dp.add_handler(start_handler)
@@ -99,6 +110,11 @@ def main():
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
     drunkenness_handler = CommandHandler('gradosEbriedad', drunkenness)
     dp.add_handler(drunkenness_handler)
+
+    # Handler for the /gradosEbriedad command
+    # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
+    sanctions_handler = CommandHandler('sanciones', sanctions)
+    dp.add_handler(sanctions_handler)
 
     # Handler for the /help command
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
