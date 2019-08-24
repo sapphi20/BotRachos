@@ -19,7 +19,10 @@ def json_save(db, key, value):
 def json_get(db, group, key):
     with open(db, "r")as d:
         data = json.load(d)
-    return data[group][key]
+    if group in data:
+        if key in group:
+            return data[group][key]
+    return None
 
 
 def random_funfact(data):
