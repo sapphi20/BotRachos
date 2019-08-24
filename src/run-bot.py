@@ -4,7 +4,8 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BOT_TOKEN
-from src.messages import HELP_CMD, START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER, START_REPEATED
+from src.messages import ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, START_CMD_CHANNEL, START_CMD_GROUP, \
+    START_CMD_USER, START_REPEATED
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -50,6 +51,22 @@ def start_repeated(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=chat['id'], text=message)
 
 
+def influence(update: Update, context: CallbackContext):
+    """ Manages the 'gradosInfluencia' command """
+    chat = update.effective_chat
+    message = ESTADO_INFLUENCIA
+    context.bot.send_message(chat_id=chat['id'], text="Así define la ley estar bajo la influencia del alcohol:")
+    context.bot.send_message(chat_id=chat['id'], text=message)
+
+
+def drunkenness(update: Update, context: CallbackContext):
+    """ Manages the 'gradosEbriedad' command """
+    chat = update.effective_chat
+    message = ESTADO_EBRIEDAD
+    context.bot.send_message(chat_id=chat['id'], text="Así define la ley estar en estado de ebriedad:")
+    context.bot.send_message(chat_id=chat['id'], text=message)
+
+
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -72,6 +89,16 @@ def main():
         [],
     )
     dp.add_handler(start_handler)
+
+    # Handler for the /gradosInfluencia command
+    # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
+    influence_handler = CommandHandler('gradosInfluencia', influence)
+    dp.add_handler(influence_handler)
+
+    # Handler for the /gradosEbriedad command
+    # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
+    drunkenness_handler = CommandHandler('gradosEbriedad', drunkenness)
+    dp.add_handler(drunkenness_handler)
 
     # Handler for the /help command
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
