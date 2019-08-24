@@ -1,0 +1,35 @@
+import json
+import random
+
+import requests
+
+beacon_url = "https://beacon.clcert.cl/beacon/2.0/pulse/last"
+
+
+def json_save(db, key, value):
+    with open(db, "r") as d:
+        data = json.load(d)
+    data[key] = value
+
+    with open(db, "w+") as f:
+        f.write(json.dumps(data))
+
+
+def json_get(db, group, key):
+    with open(db, "r")as d:
+        data = json.load(d)
+    return data[group][key]
+
+
+def random_funfact(data):
+    """
+    :param data:str con la direccion relativa del archivo JSON a abrir
+    :return: str con el dato aleatorio
+    """
+    with open(data) as d:
+        data_dict = json.load(d)
+    content = requests.get(beacon_url)
+    seed = content.json()['pulse']['outputValue']
+    random.seed(seed)
+    length = len(data_dict['datos_curiosos'])
+    return data_dict['datos_curiosos'][random.randint(0, length - 1)]['content']
