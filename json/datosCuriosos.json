@@ -1,0 +1,64 @@
+{
+  "datos_curiosos": [
+    {
+      "key": "0",
+      "type": "text",
+      "content": "Un total de 34 personas murieron en el fin de semana largo de Fiestas Patrias del 2018, de las cuales 14 se encontraban en estado de ebriedad/bajo la influencia del alcohol"
+    },
+    {
+      "key": "1",
+      "type": "text",
+      "content": "Cada año se producen 3 millones de muertes en el mundo debido al consumo nocivo de alcohol, lo que representa un 5,3% de todas las defunciones, es decir 1 de cada 20 muertes."
+    },
+    {
+      "key": "2",
+      "type": "text",
+      "content": "El uso nocivo de alcohol es un factor causal en más de 200 enfermedades y trastornos."
+    },
+    {
+      "key": "3",
+      "type": "text",
+      "content": "El consumo de alcohol provoca defunción y discapacidad a una edad relativamente temprana. En el grupo etario de 20 a 39 años, un 13,5% de las defunciones son atribuibles al consumo de alcohol."
+    },
+    {
+      "key": "4",
+      "type": "text",
+      "content": "Según la Organización Mundial de la Salud (OMS), Chile es el segundo país de América Latina con mayor consumo de alcohol per cápita, con 9,6 litros al año."
+    },
+    {
+      "key": "5",
+      "type": "text",
+      "content": "De todas las muertes atribuibles al alcohol, el 28% se debe a lesiones, como las causadas por accidentes de tráfico, por autolesiones como el suicidio, o por violencia interpersonal."
+    },
+    {
+      "key": "6",
+      "type": "text",
+      "content": "De acuerdo a la Ley de Tránsito se encuentra prohibido el consumo de alcohol al interior de un vehículo, independiente de si es el conductor o alguno de los pasajeros de este. Si en un control se detecta esta situación, los responsables se arriesgan a multas que pueden ir desde las 0,5 a 1 UTM."
+    },
+    {
+      "key": "7",
+      "type": "text",
+      "content": "Segun un estudio de la OMS (Organizacion Mundial de la Salud) un 27,3% de los adolescentes chilenos entre 15 y 19 años presentan un intenso consumo de alcohol."
+    },
+    {
+      "key": "8",
+      "type": "text",
+      "content": "Desde que el alcohol es ingerido, puede permanecer hasta 18 horas circulando por el torrente sanguineo."
+    },
+    {
+      "key": "9",
+      "type": "text",
+      "content": "El alcohol produce una sensación momentánea de calor al dilatar los vasos sanguíneos y dirigir la sangre hacia la superficie de la piel, pero en poco tiempo la temperatura interior del cuerpo disminuye y se siente más frío. Por eso, en situaciones de embriaguez, hay que abrigar y proporcionar calor a la persona y nunca intentar espabilarla con duchas frías."
+    },
+    {
+      "key": "10",
+      "type": "image",
+      "content": "resources/fallecidos_por_alcohol_chile.png"
+    },
+    {
+      "key": "11",
+      "type": "image",
+      "content": "resources/fiscalizaciones_carabineros.png"
+    }
+  ]
+}
