@@ -20,8 +20,8 @@ def json_get(db, group, key):
     with open(db, "r")as d:
         data = json.load(d)
     if group in data:
-        if key in group:
-            return data[group][key]
+        if key in data[str(group)]:
+            return data[str(group)][key]
     return None
 
 

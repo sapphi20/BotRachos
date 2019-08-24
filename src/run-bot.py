@@ -127,6 +127,7 @@ def choose_driver(update: Update, context: CallbackContext):
         for user in context.chat_data['drivers']:
             driver_list.append(user.name)
         chosen = run_choice(driver_list, chat['id'])
+        print(chat['id'])
         context.bot.send_message(chat_id=chat['id'], text=DESIGNATED_DRIVER_MSG.format(chosen))
         context.chat_data.clear()
     return CONV_STATES['GROUP']
@@ -136,6 +137,7 @@ def detailed_info(update: Update, context: CallbackContext):
     """ Manages the 'reclamosALaFifa' command """
     chat = update.effective_chat
     message = rand_verify(chat['id'])
+    print(chat['id'])
     context.bot.send_message(chat_id=chat['id'], text=message)
 
 

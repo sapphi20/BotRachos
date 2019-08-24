@@ -119,13 +119,13 @@ def get_seed_by_pid(pulse_id):
 
 
 def rand_verify(id_group):
-    beacon = json_get(db, id_group, "ultimo_pulso")
-    gente = json_get(db, id_group, "ultimo_grupo")
-    ultimo_conductor = json_get(db, id_group, "ultimo_conductor")
+    beacon = json_get(db, str(id_group), "ultimo_pulso")
+    gente = json_get(db, str(id_group), "ultimo_grupo")
+    ultimo_conductor = json_get(db, str(id_group), "ultimo_conductor")
     if beacon is None:
         return "Anteriormente no han elegido conductores con este bot"
     msg = "El ultimo sorteo se generó con las siguientes personas:\n" + \
         '\n'.join(gente) + \
-        "Y el conductor designado fue " + ultimo_conductor + ".\n" + \
-        "Reclamos a la FIFA a través de " + beacon_url + beacon + "."
+        "\nY el conductor designado fue " + ultimo_conductor + ".\n" + \
+        "Reclamos a la FIFA a través de " + str(beacon_url) + str(beacon) + "."
     return msg
