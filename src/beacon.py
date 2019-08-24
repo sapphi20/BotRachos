@@ -1,7 +1,8 @@
-import requests
-import src
 import random
 
+import requests
+
+from config import BASE_PATH
 # API URL
 from src.utils import json_get, json_save
 
@@ -10,7 +11,7 @@ beacon_url = "https://beacon.clcert.cl/beacon/2.0/chain/4/pulse/"
 
 # Python dict containing the information of the last lottery
 DATA = None
-db = "json/db.json"
+db = BASE_PATH + "/json/db.json"
 
 
 def get_last_pulse():
@@ -65,6 +66,7 @@ def run_choice(participantes, id_grupo):
                                  "ultimo_conductor": elegido,
                                  "ultimo_grupo": participantes,
                                  "vueltas": vueltas})
+    return elegido
 
 
 def verify(id_grupo):
@@ -81,6 +83,8 @@ def verify(id_grupo):
     last_boy = json_get(db, id_grupo, "ultimo_conductor")  # aqui va el niño del diccionario
     grupo = json_get(db, id_grupo, "ultimo_grupo")
     vueltas = json_get(db, id_grupo, "vueltas")
+
+    elegido = None
 
     for i in range(vueltas):
         elegido = grupo.get(random.randint(0, grupo.length - 1))
@@ -112,7 +116,3 @@ def get_seed_by_pid(pulse_id):
     # Random string of 512 bits obtained from the pulse
     seed = pulse["outputValue"]
     return seed
-
-
-run_choice(["1", "2", "3"], "jajaja")
-run_choice(["1", "2", "3"], "blabla")

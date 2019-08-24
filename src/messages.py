@@ -34,3 +34,10 @@ SANCIONES_MSG = "Éstas son las sanciones por manejar con alcohol, por favor sea
 SANCIONES_URI = "/resources/SancionesLeyToleranciaCero.jpg"
 
 CURIOUS_FACT_MSG = "Dato curioso del minuto:"
+
+REQUEST_DRIVERS_MSG = "Vamos a designar conductor: los que manejen digan /yoManejo\n" \
+                      "Cuando todos los conductores estén, que {0} diga /elegirConductor\n" \
+                      "Conductores anotados:"
+ADDED_DRIVER_MSG = "{0} puede conducir"
+
+DESIGNATED_DRIVER_MSG = "Y el conductor designado es {0}"

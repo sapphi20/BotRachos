@@ -4,8 +4,10 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BASE_PATH, BOT_TOKEN
-from src.messages import CURIOUS_FACT_MSG, ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, HELP_CMD, SANCIONES_MSG, SANCIONES_URI, \
-    START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER, START_REPEATED
+from src.beacon import run_choice
+from src.messages import ADDED_DRIVER_MSG, CURIOUS_FACT_MSG, DESIGNATED_DRIVER_MSG, ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, \
+    HELP_CMD, REQUEST_DRIVERS_MSG, SANCIONES_MSG, SANCIONES_URI, START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER, \
+    START_REPEATED
 from src.utils import funfact_uri, random_funfact
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -90,7 +92,45 @@ def curious_fact(update: Update, context: CallbackContext):
     if fact[1] == 'text':
         context.bot.send_message(chat_id=chat['id'], text=fact[0])
     elif fact[1] == 'image':
-        context.bot.send_photo(chat_id=chat['id'], photo=(BASE_PATH + fact(0)))
+        context.bot.send_photo(chat_id=chat['id'], photo=(BASE_PATH + fact[0]))
+
+
+def get_driver_candidates(update: Update, context: CallbackContext):
+    """ Manages the 'designarConductor' command """
+    user = update.effective_user
+    chat = update.effective_chat
+    message = REQUEST_DRIVERS_MSG.format(user.name)
+    sent_msg = context.bot.send_message(chat_id=chat['id'], text=message)
+    context.chat_data['driver_request_creator_id'] = user['id']
+    context.chat_data['request_msg'] = sent_msg
+    context.chat_data['current_text'] = sent_msg['text']
+    context.chat_data['drivers'] = []
+    return CONV_STATES['CANDIDATES']
+
+
+def add_driver_candidate(update: Update, context: CallbackContext):
+    """ Manages the 'yoManejo' command """
+    user = update.effective_user
+    chat = update.effective_chat
+    if user not in context.chat_data['drivers']:
+        context.chat_data['drivers'].append(user)
+        context.chat_data['request_msg'].edit_text(text=context.chat_data['current_text'] + "\n- {0}".format(user.name))
+        context.chat_data['current_text'] = context.chat_data['current_text'] + "\n- {0}".format(user.name)
+        context.bot.send_message(chat_id=chat['id'], text=ADDED_DRIVER_MSG.format(user.name))
+
+
+def choose_driver(update: Update, context: CallbackContext):
+    """ Manages the 'elegirConductor' command """
+    user = update.effective_user
+    chat = update.effective_chat
+    if user['id'] == context.chat_data['driver_request_creator_id']:
+        driver_list = []
+        for user in context.chat_data['drivers']:
+            driver_list.append(user.name)
+        chosen = run_choice(driver_list, chat['id'])
+        context.bot.send_message(chat_id=chat['id'], text=DESIGNATED_DRIVER_MSG.format(chosen))
+        context.chat_data.clear()
+    return CONV_STATES['GROUP']
 
 
 def error(update: Update, context: CallbackContext):
@@ -111,8 +151,16 @@ def main():
     # https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.conversationhandler.html
     start_handler = ConversationHandler(
         [CommandHandler('start', start)],
-        {CONV_STATES['GROUP']: [CommandHandler('start', start_repeated)]},
+        {CONV_STATES['GROUP']: [
+            CommandHandler('start', start_repeated),
+            CommandHandler('designarConductor', get_driver_candidates, pass_chat_data=True),
+        ], CONV_STATES['CANDIDATES']: [
+            CommandHandler('start', start_repeated),
+            CommandHandler('yoManejo', add_driver_candidate, pass_chat_data=True),
+            CommandHandler('elegirConductor', choose_driver, pass_chat_data=True)
+        ]},
         [],
+        per_user=False, per_message=False
     )
     dp.add_handler(start_handler)
 
