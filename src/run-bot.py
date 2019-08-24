@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BOT_TOKEN
-from src.messages import START_CMD
+from src.messages import START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -17,8 +17,14 @@ END_CONV = ConversationHandler.END
 def start(update: Update, context: CallbackContext):
     """ Manages the start command """
     # https://python-telegram-bot.readthedocs.io/en/stable/telegram.user.html
-    user = update.effective_user
-    context.bot.send_message(chat_id=user['id'], text=START_CMD)
+    chat = update.effective_chat
+    message = START_CMD_GROUP
+    chat_type = chat.type
+    if chat_type == chat.CHANNEL:
+        message = START_CMD_CHANNEL
+    elif chat_type == chat.PRIVATE:
+        message = START_CMD_USER
+    context.bot.send_message(chat_id=chat['id'], text=message)
     result = -1
     return result
 
@@ -51,6 +57,7 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
