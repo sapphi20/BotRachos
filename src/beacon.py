@@ -125,7 +125,7 @@ def rand_verify(id_group):
     if beacon is None:
         return "No han hecho un grupo"
     msg = "El ultimo sorteo se genero con las siguientes personas:\n" + \
-        '\n'.join(gente) + "\n" + \
+        '\n'.join(gente) + \
         "Y el conductor designado fue " + ultimo_conductor + ".\n" + \
         "Reclamos a la FIFA a traves de " + beacon_url + beacon + "."
     return msg
