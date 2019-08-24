@@ -116,3 +116,16 @@ def get_seed_by_pid(pulse_id):
     # Random string of 512 bits obtained from the pulse
     seed = pulse["outputValue"]
     return seed
+
+
+def rand_verify(id_group):
+    beacon = json_get(db, id_group, "ultimo_pulso")
+    gente = json_get(db, id_group, "ultimo_grupo")
+    ultimo_conductor = json_get(db, id_group, "ultimo_conductor")
+    if beacon is None:
+        return "No han hecho un grupo"
+    msg = "El ultimo sorteo se genero con las siguientes personas:\n" + \
+        '\n'.join(gente) + "\n" + \
+        "Y el conductor designado fue " + ultimo_conductor + ".\n" + \
+        "Reclamos a la FIFA a traves de " + beacon_url + beacon + "."
+    return msg
