@@ -4,7 +4,21 @@ START_CMD_GROUP = "Hola! Los voy a ayudar a tomar responsablemente :D"
 START_CMD_CHANNEL = "Hola! De verdad no sé como me añadiste a un canal, " \
                     "pero necesito estar en un grupo para funcionar"
 START_REPEATED = "Ya me han empezado en este grupo c:"
-HELP_CMD = "Saludos cordiales"
+HELP_CMD = 'Hola, soy BotRacho Responsable y los ayudaré a ser responsables al volante, ' \
+           'conmigo pueden usar éstos comandos:' \
+           '/help: Muestra este diálogo de información' \
+           '/gradosInfluencia: Muestra cuántos grados son "estar bajo la influencia del alcohol"' \
+           ' y cuántos tragos también' \
+           '/gradosEbriedad: Muestra cuántos grados son "estar en estado de ebriedad"' \
+           ' y cuántos tragos también' \
+           '/sanciones: Muestra las sanciones por conducir con alcohol en la sangre' \
+           '/datoCurioso: Entrega un dato curioso sobre el alcohol por minuto' \
+           'Los siguientes comandos solo pueden ser usados en grupos:' \
+           '/designarConductor: Empieza un sorteo para elegir un conductor designado' \
+           '/yoManejo: Te añade al sorteo de conductor designado' \
+           '/elegirConductor: Define el conductor designado entre los que se añadieron, ' \
+           'solo lo puede usar quién partió el sorteo' \
+           '/reclamosALaFifa: Muestra la información del último sorteo, por si quieren verificarlo independientemente'
 
 ESTADO_INFLUENCIA = "Bajo la influencia del Alcohol:\n" \
                     "0,3 e inferior a 0,8 g/ml.\n" \

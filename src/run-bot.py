@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BASE_PATH, BOT_TOKEN
-from src.beacon import run_choice
+from src.beacon import run_choice, rand_verify
 from src.messages import ADDED_DRIVER_MSG, CURIOUS_FACT_MSG, DESIGNATED_DRIVER_MSG, ESTADO_EBRIEDAD, ESTADO_INFLUENCIA, \
     HELP_CMD, REQUEST_DRIVERS_MSG, SANCIONES_MSG, SANCIONES_URI, START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER, \
     START_REPEATED
@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 CONV_STATES = {
     'GROUP': 1,
     'CANDIDATES': 2,
-    'RANDOMIZING': 3,
     'EXIT': ConversationHandler.END,
 }
 
@@ -133,6 +132,13 @@ def choose_driver(update: Update, context: CallbackContext):
     return CONV_STATES['GROUP']
 
 
+def detailed_info(update: Update, context: CallbackContext):
+    """ Manages the 'reclamosALaFifa' command """
+    chat = update.effective_chat
+    message = rand_verify(chat['id'])
+    context.bot.send_message(chat_id=chat['id'], text=message)
+
+
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -154,10 +160,12 @@ def main():
         {CONV_STATES['GROUP']: [
             CommandHandler('start', start_repeated),
             CommandHandler('designarConductor', get_driver_candidates, pass_chat_data=True),
+            CommandHandler('reclamosALaFifa', detailed_info),
         ], CONV_STATES['CANDIDATES']: [
             CommandHandler('start', start_repeated),
             CommandHandler('yoManejo', add_driver_candidate, pass_chat_data=True),
-            CommandHandler('elegirConductor', choose_driver, pass_chat_data=True)
+            CommandHandler('elegirConductor', choose_driver, pass_chat_data=True),
+            CommandHandler('reclamosALaFifa', detailed_info)
         ]},
         [],
         per_user=False, per_message=False

@@ -123,9 +123,9 @@ def rand_verify(id_group):
     gente = json_get(db, id_group, "ultimo_grupo")
     ultimo_conductor = json_get(db, id_group, "ultimo_conductor")
     if beacon is None:
-        return "No han hecho un grupo"
-    msg = "El ultimo sorteo se genero con las siguientes personas:\n" + \
+        return "Anteriormente no han elegido conductores con este bot"
+    msg = "El ultimo sorteo se generó con las siguientes personas:\n" + \
         '\n'.join(gente) + \
         "Y el conductor designado fue " + ultimo_conductor + ".\n" + \
-        "Reclamos a la FIFA a traves de " + beacon_url + beacon + "."
+        "Reclamos a la FIFA a través de " + beacon_url + beacon + "."
     return msg
