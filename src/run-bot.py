@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, ConversationHandler, Updater
 
 from config import BOT_TOKEN
-from src.messages import START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER
+from src.messages import HELP_CMD, START_CMD_CHANNEL, START_CMD_GROUP, START_CMD_USER
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -29,6 +29,13 @@ def start(update: Update, context: CallbackContext):
     return result
 
 
+def help_cmd(update: Update, context: CallbackContext):
+    """ Manages the help command """
+    chat = update.effective_chat
+    message = HELP_CMD
+    context.bot.send_message(chat_id=chat['id'], text=message)
+
+
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -47,6 +54,11 @@ def main():
     # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
     start_handler = CommandHandler('start', start)
     dp.add_handler(start_handler)
+
+    # Handler for the /help command
+    # https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.commandhandler.html
+    help_handler = CommandHandler('help', help_cmd)
+    dp.add_handler(help_handler)
 
     # log all errors
     dp.add_error_handler(error)
